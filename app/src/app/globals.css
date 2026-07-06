@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --line: rgba(59, 42, 30, 0.14);
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+body {
+  background: theme('colors.ivory');
+  color: theme('colors.charcoal');
+  font-family: var(--font-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+::selection { background: theme('colors.camel'); color: theme('colors.warm-white'); }
+
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+}
+
+h1, h2, h3, h4 { font-family: var(--font-display), serif; font-weight: 400; letter-spacing: -0.01em; line-height: 1.02; }
+
+@layer components {
+  .eyebrow {
+    @apply font-sans text-[11px] font-medium uppercase text-bronze;
+    letter-spacing: 0.32em;
+  }
+  .btn {
+    @apply inline-flex items-center gap-2.5 rounded-full px-[30px] py-4 text-[12px] font-medium uppercase no-underline;
+    letter-spacing: 0.14em;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      background 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+  .btn-solid { @apply bg-warm-white text-charcoal; }
+  .btn-solid:hover { @apply bg-camel text-warm-white; }
+  .btn-ghost { @apply border border-warm-white/40 text-warm-white; }
+  .btn-ghost:hover { @apply border-warm-white bg-warm-white/[0.08]; }
+  .btn-dark { @apply bg-deep-brown text-warm-white; }
+  .btn-dark:hover { @apply bg-camel text-warm-white; }
+  .btn-outline { @apply border border-deep-brown/30 text-deep-brown; }
+  .btn-outline:hover { @apply border-deep-brown bg-deep-brown text-warm-white; }
+  .section-pad { @apply px-5 py-20 sm:px-8 md:py-28 lg:py-36 xl:px-14; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom cursor hover growth */
+.cursor-ring.is-hover {
+  width: 76px;
+  height: 76px;
+  border-color: transparent;
+  background: rgba(176, 141, 91, 0.12);
+}
+
+/* Zebra-hairline signature divider */
+.stripe-rule { height: 1px; width: 100%; background: var(--line); position: relative; overflow: hidden; }
+.stripe-rule::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg, theme('colors.deep-brown') 0 3px, transparent 3px 9px);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.stripe-rule[data-in='true']::before { transform: scaleX(1); }
